@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TwistChess - Chess with Twists</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Login/Signup Screen -->
+        <div id="auth-screen" class="screen active">
+            <div class="auth-container">
+                <div class="logo">
+                    <h1>Twist<span>Chess</span></h1>
+                    <p>Chess with a Twist</p>
+                </div>
+                <div class="auth-tabs">
+                    <button class="tab active" data-tab="login">Login</button>
+                    <button class="tab" data-tab="signup">Sign Up</button>
+                </div>
+                <form id="login-form" class="auth-form active">
+                    <input type="text" id="login-username" placeholder="Username" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                    <p class="error" id="login-error"></p>
+                </form>
+                <form id="signup-form" class="auth-form">
+                    <input type="text" id="signup-username" placeholder="Username" required>
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                    <button type="submit">Sign Up</button>
+                    <p class="error" id="signup-error"></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="main-app" class="screen">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Twist<span>Chess</span></h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <button data-view="home" class="nav-btn active"><span class="icon">🏠</span> Home</button>
+                    <button data-view="play" class="nav-btn"><span class="icon">♟️</span> Play</button>
+                    <button data-view="modes" class="nav-btn"><span class="icon">🎲</span> Game Modes</button>
+                    <button data-view="profile" class="nav-btn"><span class="icon">👤</span> Profile</button>
+                    <button data-view="friends" class="nav-btn"><span class="icon">👥</span> Friends</button>
+                    <button data-view="games" class="nav-btn"><span class="icon">📜</span> Recent Games</button>
+                    <button data-view="settings" class="nav-btn"><span class="icon">⚙️</span> Settings</button>
+                </nav>
+                <div class="sidebar-footer">
+                    <button id="logout-btn">Logout</button>
+                </div>
+            </aside>
+            <main class="main-content">
+                <!-- Home View -->
+                <div id="home-view" class="view active">
+                    <h1>Welcome to TwistChess!</h1>
+                    <p>Choose a game mode and start playing with unique twists.</p>
+                    <div class="featured-modes">
+                        <div class="mode-card" data-mode="standard">
+                            <h3>Standard Chess</h3>
+                            <p>Classic 8x8 chess</p>
+                        </div>
+                        <div class="mode-card" data-mode="roook">
+                            <h3>ROOOK</h3>
+                            <p>Knights & Bishops become Rooks</p>
+                        </div>
+                        <div class="mode-card" data-mode="hiddenqueen">
+                            <h3>Hidden Queen</h3>
+                            <p>Secret queen pawn</p>
+                        </div>
+                        <div class="mode-card" data-mode="bigboard">
+                            <h3>Big Board</h3>
+                            <p>10x10 Chess</p>
+                        </div>
+                    </div>
+                    <button class="quick-play" data-mode="standard">Quick Play</button>
+                </div>
+
+                <!-- Play View -->
+                <div id="play-view" class="view">
+                    <div class="game-header">
+                        <div class="player-info opponent">
+                            <span class="name">Opponent</span>
+                            <span class="timer">10:00</span>
+                        </div>
+                        <div class="game-status" id="game-status">White to move</div>
+                        <div class="player-info you">
+                            <span class="name" id="player-name">You</span>
+                            <span class="timer">10:00</span>
+                        </div>
+                    </div>
+                    <div class="board-container">
+                        <div id="chessboard" class="chessboard"></div>
+                        <div class="promotion-modal" id="promotion-modal">
+                            <div class="promo-options">
+                                <button data-piece="q">Q</button>
+                                <button data-piece="r">R</button>
+                                <button data-piece="b">B</button>
+                                <button data-piece="n">N</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-controls">
+                        <button id="resign-btn">Resign</button>
+                        <button id="draw-btn">Offer Draw</button>
+                        <button id="flip-board">Flip Board</button>
+                        <button id="sound-toggle">🔊 Sound</button>
+                    </div>
+                    <div class="move-history" id="move-history"></div>
+                </div>
+
+                <!-- Modes View -->
+                <div id="modes-view" class="view">
+                    <h1>Game Modes</h1>
+                    <div class="modes-grid">
+                        <div class="mode-card" data-mode="standard">
+                            <h3>Standard</h3>
+                            <p>Classic chess rules on 8x8 board.</p>
+                        </div>
+                        <div class="mode-card" data-mode="roook">
+                            <h3>ROOOK</h3>
+                            <p>All knights and bishops are replaced with rooks. Chaos ensues!</p>
+                        </div>
+                        <div class="mode-card" data-mode="bigboard">
+                            <h3>Big Board</h3>
+                            <p>Play on a 10x10 board with extra pieces.</p>
+                        </div>
+                        <div class="mode-card" data-mode="smallboard">
+                            <h3>Small Board</h3>
+                            <p>6x6 board for faster games.</p>
+                        </div>
+                        <div class="mode-card" data-mode="hiddenqueen">
+                            <h3>Hidden Queen</h3>
+                            <p>Click a pawn at the start to make it your secret queen. Opponent can't see it!</p>
+                        </div>
+                        <div class="mode-card" data-mode="fog">
+                            <h3>Fog of War</h3>
+                            <p>Only see your pieces and those under attack.</p>
+                        </div>
+                        <div class="mode-card" data-mode="atomic">
+                            <h3>Atomic Chess</h3>
+                            <p>Captures explode, destroying surrounding pieces.</p>
+                        </div>
+                        <div class="mode-card" data-mode="crazyhouse">
+                            <h3>Crazyhouse</h3>
+                            <p>Captured pieces can be dropped back.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile View -->
+                <div id="profile-view" class="view">
+                    <h1>Your Profile</h1>
+                    <div class="profile-header">
+                        <div class="avatar" id="profile-avatar">👤</div>
+                        <div>
+                            <h2 id="profile-username">Username</h2>
+                            <p id="profile-stats">Games: 0 | Wins: 0 | Rating: 1200</p>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <label>Display Name: <input type="text" id="display-name"></label>
+                        <label>Avatar Emoji: <input type="text" id="avatar-emoji" maxlength="2"></label>
+                        <button id="save-profile">Save Profile</button>
+                    </div>
+                </div>
+
+                <!-- Friends View -->
+                <div id="friends-view" class="view">
+                    <h1>Friends</h1>
+                    <div class="add-friend">
+                        <input type="text" id="friend-username" placeholder="Add friend by username">
+                        <button id="add-friend-btn">Add</button>
+                    </div>
+                    <ul id="friends-list"></ul>
+                </div>
+
+                <!-- Games View -->
+                <div id="games-view" class="view">
+                    <h1>Recent Games</h1>
+                    <ul id="games-list"></ul>
+                </div>
+
+                <!-- Settings View -->
+                <div id="settings-view" class="view">
+                    <h1>Settings</h1>
+                    <div class="settings-section">
+                        <h2>Theme</h2>
+                        <select id="theme-select">
+                            <option value="default">Default Dark</option>
+                            <option value="light">Light</option>
+                            <option value="wood">Wood</option>
+                            <option value="blue">Blue Ocean</option>
+                            <option value="green">Forest Green</option>
+                            <option value="pink">Bubblegum</option>
+                        </select>
+                    </div>
+                    <div class="settings-section">
+                        <h2>Board Colors</h2>
+                        <label>Light Square: <input type="color" id="light-square" value="#f0d9b5"></label>
+                        <label>Dark Square: <input type="color" id="dark-square" value="#b58863"></label>
+                    </div>
+                    <div class="settings-section">
+                        <h2>Piece Set</h2>
+                        <select id="piece-set">
+                            <option value="classic">Classic</option>
+                            <option value="neo">Neo</option>
+                            <option value="outline">Outline</option>
+                            <option value="modern">Modern</option>
+                        </select>
+                    </div>
+                    <div class="settings-section">
+                        <h2>Sounds</h2>
+                        <label><input type="checkbox" id="sound-enabled" checked> Enable Sounds</label>
+                        <label>Volume: <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5"></label>
+                    </div>
+                    <div class="settings-section">
+                        <h2>Board Size</h2>
+                        <label>Scale: <input type="range" id="board-scale" min="0.6" max="1.2" step="0.1" value="1"></label>
+                    </div>
+                    <button id="save-settings">Save Settings</button>
+                    <button id="reset-settings">Reset to Default</button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/pieces.js"></script>
+    <script src="js/chess.js"></script>
+    <script src="js/modes.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/sounds.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
