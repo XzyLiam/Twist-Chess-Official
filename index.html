@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TwistChess - Chess with a Twist</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Auth Screen -->
+    <div id="auth-screen" class="screen active">
+      <div class="auth-container">
+        <div class="logo">
+          <h1>TwistChess</h1>
+          <p>Chess, but with a twist</p>
+        </div>
+        <div class="auth-forms">
+          <div id="login-form" class="auth-form active">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Username" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button id="login-btn" class="btn primary">Login</button>
+            <p class="switch-form">Don't have an account? <a href="#" id="show-signup">Sign up</a></p>
+          </div>
+          <div id="signup-form" class="auth-form">
+            <h2>Sign Up</h2>
+            <input type="text" id="signup-username" placeholder="Username" required>
+            <input type="email" id="signup-email" placeholder="Email" required>
+            <input type="password" id="signup-password" placeholder="Password" required>
+            <button id="signup-btn" class="btn primary">Create Account</button>
+            <p class="switch-form">Already have an account? <a href="#" id="show-login">Login</a></p>
+          </div>
+        </div>
+        <div class="guest-option">
+          <button id="guest-btn" class="btn secondary">Play as Guest</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="screen">
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <h2>TwistChess</h2>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#" data-page="home" class="nav-link active">Home</a></li>
+          <li><a href="#" data-page="play" class="nav-link">Play</a></li>
+          <li><a href="#" data-page="gamemodes" class="nav-link">Game Modes</a></li>
+          <li><a href="#" data-page="profile" class="nav-link">Profile</a></li>
+          <li><a href="#" data-page="friends" class="nav-link">Friends</a></li>
+          <li><a href="#" data-page="recent" class="nav-link">Recent Games</a></li>
+          <li><a href="#" data-page="settings" class="nav-link">Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <span id="current-user">Guest</span>
+            <button id="logout-btn" class="btn small">Logout</button>
+          </div>
+        </div>
+      </nav>
+
+      <main class="content">
+        <!-- Home Page -->
+        <section id="home-page" class="page active">
+          <h1>Welcome to TwistChess</h1>
+          <p class="subtitle">Experience chess like never before with unique twists and variants.</p>
+          <div class="quick-actions">
+            <button class="btn large primary" data-page="play">Start Playing</button>
+            <button class="btn large secondary" data-page="gamemodes">Explore Modes</button>
+          </div>
+          <div class="featured-modes">
+            <h3>Popular Twists</h3>
+            <div class="mode-cards">
+              <div class="mode-card">
+                <h4>ROOOK</h4>
+                <p>Knights and Bishops become Rooks. Pure power!</p>
+              </div>
+              <div class="mode-card">
+                <h4>Hidden Queen</h4>
+                <p>Choose a secret pawn that acts as your queen.</p>
+              </div>
+              <div class="mode-card">
+                <h4>Big Board</h4>
+                <p>10x10 board with extra pieces.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Play Page -->
+        <section id="play-page" class="page">
+          <div class="play-header">
+            <h2 id="current-mode">Standard Chess</h2>
+            <div class="game-controls">
+              <button id="new-game-btn" class="btn">New Game</button>
+              <button id="flip-board-btn" class="btn">Flip Board</button>
+              <select id="mode-select">
+                <option value="standard">Standard</option>
+                <option value="roook">ROOOK</option>
+                <option value="big">Big Board (10x10)</option>
+                <option value="small">Small Board (6x6)</option>
+                <option value="hidden">Hidden Queen</option>
+                <option value="atomic">Atomic</option>
+                <option value="fog">Fog of War</option>
+              </select>
+            </div>
+          </div>
+          <div class="game-area">
+            <div class="board-container">
+              <div id="chessboard" class="chessboard"></div>
+            </div>
+            <div class="game-info">
+              <div class="player-panel white">
+                <h3>White</h3>
+                <div id="white-captured" class="captured"></div>
+              </div>
+              <div class="move-history">
+                <h4>Moves</h4>
+                <ol id="move-list"></ol>
+              </div>
+              <div class="player-panel black">
+                <h3>Black</h3>
+                <div id="black-captured" class="captured"></div>
+              </div>
+              <div id="status" class="status">White to move</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Game Modes Page -->
+        <section id="gamemodes-page" class="page">
+          <h2>Game Modes</h2>
+          <div class="modes-grid">
+            <div class="mode-detail">
+              <h3>Standard</h3>
+              <p>Classic chess rules on 8x8 board.</p>
+              <button class="btn" data-mode="standard">Play</button>
+            </div>
+            <div class="mode-detail">
+              <h3>ROOOK</h3>
+              <p>All Knights and Bishops are replaced with Rooks. Expect long-range chaos!</p>
+              <button class="btn" data-mode="roook">Play</button>
+            </div>
+            <div class="mode-detail">
+              <h3>Big Board</h3>
+              <p>10x10 board with extra Rooks and Knights on the sides.</p>
+              <button class="btn" data-mode="big">Play</button>
+            </div>
+            <div class="mode-detail">
+              <h3>Small Board</h3>
+              <p>Compact 6x6 board. Faster games, fewer pieces.</p>
+              <button class="btn" data-mode="small">Play</button>
+            </div>
+            <div class="mode-detail">
+              <h3>Hidden Queen</h3>
+              <p>At the start, click one of your pawns to make it your secret queen. Opponent won't know which one!</p>
+              <button class="btn" data-mode="hidden">Play</button>
+            </div>
+            <div class="mode-detail">
+              <h3>Atomic</h3>
+              <p>Captures explode and remove adjacent pieces (except pawns).</p>
+              <button class="btn" data-mode="atomic">Play</button>
+            </div>
+            <div class="mode-detail">
+              <h3>Fog of War</h3>
+              <p>You can only see squares your pieces attack or occupy.</p>
+              <button class="btn" data-mode="fog">Play</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section id="profile-page" class="page">
+          <h2>Your Profile</h2>
+          <div class="profile-card">
+            <div class="avatar">TC</div>
+            <div class="profile-info">
+              <h3 id="profile-username">Guest</h3>
+              <p>Games Played: <span id="games-played">0</span></p>
+              <p>Wins: <span id="wins">0</span></p>
+              <p>Member since: <span id="member-since">Today</span></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Friends Page -->
+        <section id="friends-page" class="page">
+          <h2>Friends</h2>
+          <div class="friends-list">
+            <div class="friend">
+              <div class="friend-avatar">A</div>
+              <div class="friend-info">
+                <h4>Alice</h4>
+                <p>Online</p>
+              </div>
+              <button class="btn small">Challenge</button>
+            </div>
+            <div class="friend">
+              <div class="friend-avatar">B</div>
+              <div class="friend-info">
+                <h4>Bob</h4>
+                <p>Offline</p>
+              </div>
+              <button class="btn small">Challenge</button>
+            </div>
+            <div class="friend">
+              <div class="friend-avatar">C</div>
+              <div class="friend-info">
+                <h4>Charlie</h4>
+                <p>In Game</p>
+              </div>
+              <button class="btn small">Challenge</button>
+            </div>
+          </div>
+          <div class="add-friend">
+            <input type="text" placeholder="Add friend by username">
+            <button class="btn">Add</button>
+          </div>
+        </section>
+
+        <!-- Recent Games Page -->
+        <section id="recent-page" class="page">
+          <h2>Recent Games</h2>
+          <div id="recent-games-list" class="games-list">
+            <p class="empty">No games played yet. Start a game!</p>
+          </div>
+        </section>
+
+        <!-- Settings Page -->
+        <section id="settings-page" class="page">
+          <h2>Settings</h2>
+          <div class="settings-sections">
+            <div class="settings-group">
+              <h3>Appearance</h3>
+              <label>Theme:
+                <select id="theme-select">
+                  <option value="dark">Dark</option>
+                  <option value="light">Light</option>
+                  <option value="wood">Wood</option>
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                </select>
+              </label>
+              <label>Board Theme:
+                <select id="board-theme">
+                  <option value="classic">Classic</option>
+                  <option value="modern">Modern</option>
+                  <option value="marble">Marble</option>
+                  <option value="neon">Neon</option>
+                </select>
+              </label>
+              <label>Piece Set:
+                <select id="piece-set">
+                  <option value="cburnett">Cburnett (Classic)</option>
+                  <option value="merida">Merida</option>
+                  <option value="neo">Neo</option>
+                  <option value="alpha">Alpha</option>
+                  <option value="california">California</option>
+                </select>
+              </label>
+            </div>
+            <div class="settings-group">
+              <h3>Sound</h3>
+              <label><input type="checkbox" id="sound-enabled" checked> Enable Sounds</label>
+              <label>Volume: <input type="range" id="volume" min="0" max="100" value="70"></label>
+            </div>
+            <div class="settings-group">
+              <h3>Game</h3>
+              <label>Animation Speed:
+                <select id="anim-speed">
+                  <option value="fast">Fast</option>
+                  <option value="normal" selected>Normal</option>
+                  <option value="slow">Slow</option>
+                </select>
+              </label>
+              <label><input type="checkbox" id="show-coords" checked> Show Coordinates</label>
+              <label><input type="checkbox" id="highlight-moves" checked> Highlight Legal Moves</label>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
